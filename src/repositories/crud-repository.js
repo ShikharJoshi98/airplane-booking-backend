@@ -18,6 +18,9 @@ class CrudRepository {
                 id: id
             }
         });
+        if (!response) {
+            throw new AppError('Unable to fetch the resource', STATUS_CODE.NOT_FOUND);
+        }
         return response;
     }
 
