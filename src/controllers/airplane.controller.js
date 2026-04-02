@@ -39,9 +39,19 @@ async function getAirplane(req, res) {
 async function deleteAirplane(req, res) {
     try {
         const airplane = await AirplaneService.deleteAirplane(req.params.id);
-        return successResponse(res, airplane, 'Successfully deleted airplane', STATUS_CODE.OK)
+        return successResponse(res, airplane, 'Successfully deleted airplane', STATUS_CODE.OK);
     } catch (error) {
         logger.error('Error in deleting airplane : ', error);
+        return errorResponse(res, error, error.statusCode);
+    }
+}
+
+async function updateAirplane(req, res) {
+    try {
+        const airplane = await AirplaneService.updateAirplane(req.params.id, req.body);
+        return successResponse(res, airplane, 'Successfully updated airplane', STATUS_CODE.OK)
+    } catch (error) {
+        logger.error('Error in updating airplane : ', error);
         return errorResponse(res, error, error.statusCode);
     }
 }
@@ -50,5 +60,6 @@ module.exports = {
     createAirplane,
     getAllAirplanes,
     getAirplane,
-    deleteAirplane
+    deleteAirplane,
+    updateAirplane
 }

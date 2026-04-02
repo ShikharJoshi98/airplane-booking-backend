@@ -1,4 +1,4 @@
-export const STATUS_CODE = {
+const STATUS_CODE = {
     CREATED: 201,
     OK: 200,
     INTERNAL_SERVER_ERROR: 500,
@@ -6,3 +6,7 @@ export const STATUS_CODE = {
     BAD_REQUEST: 400,
     NOT_FOUND: 404
 };
+
+module.exports = {
+    STATUS_CODE
+}
