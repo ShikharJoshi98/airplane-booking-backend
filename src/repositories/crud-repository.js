@@ -1,66 +1,46 @@
 const { logger } = require("../config");
+const { STATUS_CODE } = require("../utils/constant");
+const AppError = require("../utils/error");
 
-class CrudRepository{
+class CrudRepository {
     constructor(model) {
         this.model = model;
     }
 
     async create(data) {
-        try {
-            const response = await this.model.create(data);
-            return response;
-        } catch (error) {
-            logger.error('Error in crud : create');
-            throw error;
-        }
+        const response = await this.model.create(data);
+        return response;
     }
 
     async destroy(id) {
-        try {
-            const response = await this.model.destroy({
-                where: {
-                    id: id
-                }
-            });
-            return response;
-        } catch (error) {
-            logger.error('Error in crud : destroy');
-            throw error;
-        }
+        const response = await this.model.destroy({
+            where: {
+                id: id
+            }
+        });
+        return response;
     }
 
     async get(id) {
-        try {
-            const response = await this.model.findByPk(id);
-            return response;
-        } catch (error) {
-            logger.error('Error in crud : get');
-            throw error;
+        const response = await this.model.findByPk(id);
+        if (!response) {
+            throw new AppError('Unable to fetch the resource', STATUS_CODE.NOT_FOUND);
         }
+        return response;
     }
 
     async getAll() {
-        try {
-            const response = await this.model.findAll();
-            return response;
-        } catch (error) {
-            logger.error('Error in crud : getAll');
-            throw error;
-        }
+        const response = await this.model.findAll();
+        return response;
     }
 
     async update(id, data) {
-        try {
-            const response = await this.model.update(data, {
-                where: {
-                    id:id
-                }
-            });
-            return response;
-        } catch (error) {
-            logger.error('Error in crud : update');
-            throw error;
-        }
+        const response = await this.model.update(data, {
+            where: {
+                id: id
+            }
+        });
+        return response;
     }
 }
 
